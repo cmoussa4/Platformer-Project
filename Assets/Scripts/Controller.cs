@@ -25,7 +25,7 @@ public class Controller : MonoBehaviour
     private float dashingCooldown = 1f;
     [SerializeField] TrailRenderer tr;
     private BoxCollider2D boxCollider;
-    [SerializeField] Transform respawnLoc;
+    [SerializeField] public Transform respawnLoc;
     [SerializeField] ParticleSystem dustParticles;
     [SerializeField] GameObject deathExplosion;
     [SerializeField] TMP_Text textDeaths;
@@ -34,13 +34,13 @@ public class Controller : MonoBehaviour
     private int collectables;
     private float timer;
     [SerializeField] TMP_Text timerText;
+
     // Start is called before the first frame update
     void Awake()
     {
         gm = GetComponent<GameManager>();
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
-        
     }
 
     private void Start()
@@ -173,13 +173,13 @@ public class Controller : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        
         if (collision.gameObject.CompareTag("Spike"))
         {
-            Instantiate(deathExplosion, transform.position, Quaternion.identity);
+            Instantiate(deathExplosion, this.transform.position, Quaternion.identity);
             deaths++;
             textDeaths.text = "Deaths: " + deaths.ToString();
             this.transform.position = respawnLoc.position;
-
 
         }
 
@@ -217,7 +217,7 @@ public class Controller : MonoBehaviour
 
     private IEnumerator Wait()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(5);
     }
 
 }
